@@ -1,0 +1,11 @@
+﻿@model FinalDeliverable_EAD.Models.User
+
+@{
+    ViewBag.Title = "Update";
+}
+
+<h2>Update</h2>
+<form action="/EFWChecking/UpdateConformation/@Model.U_Id" method="post">
+    Name<input type="text" value="@Model.Name" name="t1" />
+    <input type="submit" value="update User" />
+</form>

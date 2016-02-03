@@ -1,0 +1,165 @@
+﻿<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+
+@model FinalDeliverable_EAD.Models.User
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Musicstore</title>
+    
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+   
+</head>
+<body>
+    <!---start-wrap--->
+    <div class="wrap">
+
+        <div class="content">
+            <div class="contact">
+                <div class="section group">
+                    <div class="col span_1_of_3">
+                        <div class="contact_info">
+                            <h3>Find Us Here</h3>
+                            <div class="map">
+                                <iframe width="100" height="175" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.in/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Lighthouse+Point,+FL,+United+States&amp;aq=4&amp;oq=light&amp;sll=26.275636,-80.087265&amp;sspn=0.04941,0.104628&amp;ie=UTF8&amp;hq=&amp;hnear=Lighthouse+Point,+Broward,+Florida,+United+States&amp;t=m&amp;z=14&amp;ll=26.275636,-80.087265&amp;output=embed"></iframe><br><small><a href="https://maps.google.co.in/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Lighthouse+Point,+FL,+United+States&amp;aq=4&amp;oq=light&amp;sll=26.275636,-80.087265&amp;sspn=0.04941,0.104628&amp;ie=UTF8&amp;hq=&amp;hnear=Lighthouse+Point,+Broward,+Florida,+United+States&amp;t=m&amp;z=14&amp;ll=26.275636,-80.087265" style="color:#666;text-align:left;font-size:12px">View Larger Map</a></small>
+                            </div>
+                        </div>
+                        <div class="company_address">
+                            <h3>Company Information :</h3>
+                            <p>500 Lorem Ipsum Dolor Sit,</p>
+                            <p>22-56-2-9 Sit Amet, Lorem,</p>
+                            <p>USA</p>
+                            <p>Phone:(00) 222 666 444</p>
+                            <p>Fax: (000) 000 00 00 0</p>
+                            <p>Email: <a href="mailto:info@gmail.com">info[at]mycompany.com</a></p>
+                            <p>Follow on: <a href="#">Facebook</a>, <a href="#">Twitter</a></p>
+
+                        </div>
+                    </div>
+
+                    <div class="col span_2_of_3">
+                        <div class="contact-form">
+
+                            <div class="inner">
+
+                                <div id="checking">Checking...</div>
+                                <div>
+
+                                    Name: <input type="text" name="UserName" id="UserName" />
+
+                                    <input type="button" id="b1" value="Check" />
+                                    <div id="result"></div>
+                                </div>
+
+                                <form class="form">
+                                    <table>
+                                        @using (Html.BeginForm("SignUp", "Signup", "post"))
+                                        {
+
+                                            <tr>
+                                                <td>@Html.LabelFor(model => model.Name)</td>
+                                                <td>  @Html.TextBoxFor(model => model.Name,new {id="n" })</td>
+                                                @Html.ValidationMessageFor(model => model.Name)
+
+                                            </tr>
+                                            <tr>
+                                                <td> @Html.LabelFor(model => model.Password)</td>
+                                                <td>  @Html.PasswordFor(model => model.Password)</td>
+
+                                            </tr>
+                                            @Html.ValidationMessageFor(model => model.Password)
+                                            <tr>
+                                                <td>  @Html.LabelFor(model => model.Email)</td>
+                                                <td> @Html.TextBoxFor(model => model.Email)</td>
+                                            </tr>
+                                            @Html.ValidationMessageFor(model => model.Email)
+                                            <tr>
+                                                <td>  @Html.LabelFor(model => model.Address)</td>
+                                                <td> @Html.TextBoxFor(model => model.Address)</td>
+                                            </tr>
+                                            @Html.ValidationMessageFor(model => model.Address)
+                                            <tr>
+                                                <td> @Html.LabelFor(model => model.Cnic)
+                                                <td> @Html.TextBoxFor(model => model.Cnic) </td>
+                                            </tr>
+                                            @Html.ValidationMessageFor(model => model.Cnic)
+                                            <tr>
+                                                <td> @Html.LabelFor(model => model.Dob)</td>
+                                                <td> @Html.TextBoxFor(model => model.Dob, new { id = "datepicker" })</td>
+                                            </tr>
+                                            @Html.ValidationMessageFor(model => model.Dob)
+                                            <tr>
+                                                <td> </td>
+                                                <td>
+                                                    <div class="button3">
+                                                        <span>
+                                                            <span style="color: red">
+                                                                <input type="submit" id="b2" value=" Signup" style="background-color: #c30000" />
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+         
+    <!---End-wrap--->
+    <script>
+    
+
+        $(function () { $("#datepicker").datepicker(); });
+
+
+    $(document).ready(function () {
+
+        $('#checking').hide();
+
+        $('#b1').click(function () {
+
+            var userName = $('#UserName').val();
+
+
+            //alert('User Name ='+ userName);
+            $('#checking').show();
+            $.getJSON("/SignUp/CheckUserName?UserName=" + userName, function (data) {
+                $('#checking').hide();
+                if (data) {
+
+                    $('#result').text("User already exists in database");
+
+                }
+                else {
+                    $('#result').text("User Name is available");
+                }
+            });
+
+        });
+
+    });
+    $('#b2').click(function () {
+        var uname = ('#n').val();
+        if(uname=="")
+        {
+            alert("cannot empty");
+        }
+    });
+    </script>
+  
+</body>
+</html>
